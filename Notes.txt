@@ -1,0 +1,48 @@
+Dockerize the application
+Step by step
+Add docker support from Visual studio:
+OS Support will be Linux
+Docker file consists of 2 main parts:
+1. Part:
+Build the application
+
+2. Part
+Running the application
+
+Docker desktop should be running in local computer.
+
+We can debug our container with Visual Studio.
+
+Lots of docker support from visual studio.
+From visual studio: Right click on docker file and build the docker image.
+If clean solution: It will clean docker images:example commands docker rm -f 07a035c4dce7475935a54fadcd68eead14b2a89fc2af706d64fd1586b86c12c8
+
+Run docker profile in release mode in Visual studio: it will create latest image.
+docker rmi <imagename>
+Forcefully remove the image:
+docker rmi <imagename> -f
+
+Docker image build commands:
+docker build -t shoppingapp .
+
+(dot mean we have docker file in this path, build from there)
+
+Run the image in docker container:
+
+docker run -d -p 8080:80 --name myapp 6b89 (image)    shippingclient
+
+http://localhost:8080/
+
+Docker HUb container registry
+Its container registry
+
+Create docker hub repository in docker hub.
+
+docker login  (This command is for login to docker hub)
+
+We should have image with latest tag.  Repository name(dockerprakash123/shoppingapp)
+docker tag 6b89 dockerprakash123/shoppingapp
+Push images to docker hub:
+docker push dockerprakash123/shoppingapp:latest
+
+

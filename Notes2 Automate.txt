@@ -1,0 +1,13 @@
+Git hub paths:
+https://github.com/prakashtiwari/MicroserviceDevOps/blob/main/README.md
+
+https://hub.docker.com/repository/docker/dockerprakash123/shoppingapp
+Create build in docker hub:
+Link to github:
+https://hub.docker.com/settings/linked-accounts
+
+Create automated build
+
+Authorize docker to acces the GIT HUB
+
+Once docker hub is authorized, the webhook is already created in the Git Hub
