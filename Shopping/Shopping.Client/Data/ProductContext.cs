@@ -13,14 +13,14 @@ namespace Shopping.Client.Data
         new Product()
         {
         Name="IPhone X",
-        Description="This product is the best",
+        Description="This product is the best in the market",
         Price=100.20M,
         Category="Smart Phone"
         },
         new Product()
         {
         Name="Samsung 10",
-        Description="This product is the best",
+        Description="This product is the best in the world.",
         Price=100.20M,
         Category="Smart Phone"
         },
