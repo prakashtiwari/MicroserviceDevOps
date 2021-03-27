@@ -10,4 +10,15 @@ Create automated build
 
 Authorize docker to acces the GIT HUB
 
-Once docker hub is authorized, the webhook is already created in the Git Hub
+Once docker hub is authorized, the webhook is already created in the Git Hub.
+
+Once push to Git Hub, build will start automatically in Docker Hub.
+
+Once we push the image to the Git Hub, Docker Hub identified the change through Web Hook.
+
+----------------------------------------------------------------------
+Deploy application to Azure App Services:
+
+Web App for container
+
+Create Azure web apps for container.:
