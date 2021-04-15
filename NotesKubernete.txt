@@ -1,0 +1,70 @@
+What is kubernete?
+Kubernete is open source container orchestration platform.
+Kubernete is portable, extensible open source platform for managing containarized workload.
+
+Kubernete components:
+
+Pod
+
+Replicaset
+
+Deployments
+
+Deployment> Replicaset> Pod
+
+
+Service
+Its an abstract way to expose an application, 
+Kubernete gives pods its own IP address, and single DNS name for a set of pods.
+
+ConfigMap:
+Its an API object, used to store non confidential data in key value pairs.
+
+Secret:
+Used to store confidential information. I.e OAuth tokens, and SSH keys.
+Its safer to use kubernete secret.
+
+kubectl commands:
+kubectl
+
+kubectl help
+
+kubectl cluster-info
+
+kubectl version
+
+kubectl get nodes
+kubectl get pod
+
+kubectl get services
+
+kubectl get deployments
+
+kubectl delete deployment <deployment-name>
+
+Basic commands:
+declarative
+kubectl apply -f app.yaml
+
+
+Imperative
+
+Create pod in kubernete in imperative way:
+
+kubectl run swn-nginx --image=nginx
+
+kubectl get all
+
+Port forwarding
+
+kubectl port-forward swn-nginx 8080:80
+
+kubectl get pod
+
+Command to delete pod
+
+kubectl delete pod swn-nginx
+
+See history of pod
+kubectl get pod --watch
+

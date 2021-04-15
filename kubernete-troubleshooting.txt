@@ -1,0 +1,10 @@
+Get pod details
+
+kubectl get pod shoppingclient-deployment-c75b49594-p52fx -o wide
+kubectl describe pod shoppingclient-deployment-c75b49594-p52fx
+kubectl logs shoppingclient-deployment-c75b49594-p52fx
+
+Examine service definition:
+In doecker desktop there is not any LoadBalancer
+
+Use nodePorts in local

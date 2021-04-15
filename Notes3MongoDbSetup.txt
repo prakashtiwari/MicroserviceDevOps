@@ -1,0 +1,35 @@
+Mongo DB setup:
+Pick mongo db from docker hub:
+docker pull mongo
+port 27017
+Command to run mongo:
+
+docker run -d -p 27017:27017 --name shopping-mongo mongo
+
+docker ps (to see running containers)
+to start interactive terminal:
+docker exec -it shopping-mongo /bin/bash
+
+Command to show all the databases
+
+Create new database in the mongo db
+
+use CatalogDB
+
+db.createCollection('Products')
+
+Insert items
+db.Products.insertMany([{'Name': 'Asus','Category':'Computer','Summary':'Summary','Description':'This is super computer', 'ImageFile':'img.jpg','Prince':200.5},{'Name': 'HP','Category':'Computer','Summary':'Summary','Description':'', 'ImageFile':'img1.jpg','Prince':200.5}])
+
+Get the items:
+db.Products.find({}).pretty()
+
+db.Products.remove({})
+
+show collections
+
+Connect mongo from Asp.Net
+
+install mongodb.driver
+
+use BSONID for id
