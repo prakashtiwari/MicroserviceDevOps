@@ -1,0 +1,30 @@
+Azure DevOps
+1. 
+2. Integration features.
+3. Azure pipelines
+4. Azure Repos
+5. Azure Pipelines
+6. Azure Test Plans
+7. Azure Artifacts
+
+Deploy microservices to AKS using CICD
+
+Create Project
+Create a pipeline
+
+Configure Pipeline
+From template select:
+
+CI PArt:
+Select following task:
+Build and Push Image to Azure Container Registry
+
+Configuring resource
+deployment yaml file
+
+Every pipeline start with trigger.
+Variables.
+
+Azure pipeline create environment for US:
+
+

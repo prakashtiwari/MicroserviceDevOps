@@ -1,0 +1,2 @@
+Get web hook URL from the Azure container.
+Place it in the docker Hub for the continue deployment.

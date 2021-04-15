@@ -1,0 +1,36 @@
+Containerize microservices:
+
+Multi container application.
+Manage more than one containr and communicate between container.
+Managing multiple container require container orchestration toools such as kubernete, docker container and service fabric.
+Steps to add docker compose:
+Need orchestration.
+From Visual studio, add "Container Orchestrator Support"
+
+Visual studio studio support docker compose support.
+
+Docker compose file:
+It contains only the definition of the images.
+
+Docker compose overwrite:
+Additional configuration.
+
+docker ps -aq
+
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
+
+remove all images
+docker rm $(docker images -q)
+
+To remove all the images:
+docker system prune
+
+
+docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
+
+Command to stop all the containers:
+
+docker-compose -f docker-compose.yml -f docker-compose.override.yml down
+
+Completed

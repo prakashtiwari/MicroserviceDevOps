@@ -1,0 +1,268 @@
+Step By Step:
+ACR: 
+Managed private docker registry service.
+
+AKS will get images from ACR.
+
+AKS: 
+
+Push images to ACR then Pull images from AKS
+
+Steps to the AKS deployment:
+1. Build docker image
+2. Take image as per ACR login name.
+3. Create ACR in Azure subscription and protect with admin user.
+4. 
+
+
+kubectl config get-contexts
+kubectl config current-context
+kubectl config use-context <contextname>
+
+Development manifest files
+run below command
+
+docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
+docker-compose -f docker-compose.yml -f docker-compose.override.yml down
+
+http://localhost:8000/swagger/index.html
+
+Deploy an ACR isntance and deploy 
+
+Create ACR instance:
+
+Use Azure CLI
+az --version
+
+Use CLI to create container instance.
+
+use:
+az login
+
+az group create --name myResourceGroup --location westeurope
+
+Create ACR
+
+az acr create --resource-group myResourceGroup --name shoppingacrprak --sku Basic
+
+Enable admin account
+Each ACR has admin account
+Required to deploy image from container registery
+
+Deploy iamge to AKS
+
+az acr update -n shoppingacrprak --admin-enabled true 
+Take image and push to ACR
+
+Take container image for acr, upload image to the acr. View image in registry.
+
+Login to acr
+
+az acr login --name shoppingacrprak
+
+Take container image
+Tag image: 
+tag with login server addrees of acr
+Get login server address
+
+az acr list --resource-group myResourceGroup --query "[].{acrLoginServer:loginServer}" --output table
+
+Login server name: shoppingacrprak.azurecr.io
+
+docker tag shoppingapi:latest shoppingacrprak.azurecr.io/shoppingapi:v1
+docker tag shoppingclient:latest shoppingacrprak.azurecr.io/shoppingclient:v1
+
+Push images to ACR
+docker push shoppingacrprak.azurecr.io/shoppingapi:v1
+docker push shoppingacrprak.azurecr.io/shoppingclient:v1
+
+ command to display images in ACR
+az acr repository list --name shoppingacrprak --output table
+
+az acr repository show-tags --name shoppingacrprak --repository shoppingclient --output table
+
+Create AKS: Get image from ACR
+
+Deploy ASK cluster
+--Distributed plaform for distributed application
+--
+
+az aks create --resource-group myResourceGroup --name myAKSCluster --node-count 1 --generate-ssh-keys --attach-acr shoppingacrprak 
+
+Install kubernete CLI
+Connect to azure cloud services from the local computer
+Connect kubernete cluster
+
+Install kubectl cli install
+
+az aks install-cli  (Its mandatory)
+
+connect to the cluster using kubectl:
+
+get credentials to connect to cluster
+
+az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
+
+kubectl get context
+
+Verify connection to cluster
+
+kubectl get all
+kubectl get nodes
+
+Run Application in Azure AKS
+
+Update kubernete manifest files.
+
+upadate manifest
+
+Login server name: shoppingacrprak.azurecr.io
+
+When azure AKS retrieve image from ACR.
+Create image pull secret for ACR container
+
+This step is required to aks pull image from ACR
+ Create Image Pull secret
+Following details are required:
+1. Service Principal
+2. Registry url
+
+Image Pull Secret:
+Command 1:
+az acr list --resource-group myResourceGroup --query "[].{acrLoginServer:loginServer}" --output table
+
+Acr Login Server: shoppingacrprak.azurecr.io
+Password: A2kj21oqaYLUBKZbECuyOL/nVAaq=xr7
+
+kubectl create secret docker-registry acr-secret --docker-server=shoppingacrprak.azurecr.io --docker-username=shoppingacrprak --docker-password=A2kj21oqaYLUBKZbECuyOL/nVAaq=xr7 --docker-email=prakash.tiwari@fnf.com
+
+kubectl get secret
+
+In Manifest file add following:
+1. imagePullSecret
+2. Replace image name: with the ACR image name
+2. define imagePullSecret
+3. Port forwarding: No port forwarding
+4. Change config map
+
+shoppingapiclient: It sould use LoadBalancer -AKS will create ingress
+
+Run Kubernete manifest for AKS
+
+kubectl config get-contexts
+kubectl config current-context
+
+Apply changes to AKS
+
+kubectl apply -f .\aks\
+
+check deployment:
+kubectl get all
+kubectl get svc
+
+Pick external IP and try following:
+http://51.105.185.22/
+
+Troubleshoot the problem:
+kubectl get pod
+
+kubectl describe pod shoppingclient-deployment-784bdbdb88-fc4n9
+
+Scale shoppingclient in AKS
+scale pod
+1. Manual scale
+
+kubectl get pod
+kubectl get deployment
+
+kubectl scale --replicas=3 deployment.apps/shoppingclient-deployment (deployment name: long name)
+
+kubectl get pod --watch
+
+scaling down
+kubectl scale --replicas=1 deployment.apps/shoppingclient-deployment
+kubectl get pod --watch
+
+Scale using YAML
+In yaml change replicas values:
+
+
+Autoscaling using AKS:
+kubernetes supports horizontal pod autoscaing, depending on resource utilization.
+Check AKS version
+
+az aks show --resource-group myResourceGroup --name myAKSCluster --query kubernetesVersion --output table
+Result:
+1.18.14
+
+For autoscaling, create new yaml file.
+
+Provide definition in yaml.
+shoppingautoscale.yaml
+
+run autoscaler:
+
+kubectl apply -f .\aks\
+
+kubectl get hpa
+
+Deploy in Azure AKS with zero downtime:
+
+Change in shoppingclient application
+Delete image
+docker rmi ec93e34513c4 -f
+
+Run docker compose:
+docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
+Test in local
+
+docker-compose -f docker-compose.yml -f docker-compose.override.yml down
+
+
+
+
+Make new version:
+Without zero downtime
+Then tag the image:
+
+docker tag shoppingclient:latest shoppingacrprak.azurecr.io/shoppingclient:v2
+
+Push image to ACR
+Login:
+az acr login --name shoppingacrprak
+docker push shoppingacrprak.azurecr.io/shoppingclient:v2
+
+az acr repository list --name shoppingacrprak --output table
+az acr repository show-tags --name shoppingacrprak --repository shoppingclient --output table
+
+kubectl get pod
+
+change the image version in shoppingclient.yaml
+
+kubectl get deployment -o wide
+
+kubectl get replicaset -o wide
+
+---------------------------
+Update cpu resources
+Decrease existing resource definitions.
+
+Then apply withzero downtime.
+
+Stop cluster
+
+az aks stop --name myAKSCluster --resource-group myResourceGroup
+az aks start --name myAKSCluster --resource-group myResourceGroup
+
+
+
+
+
+
+
+
+
+
+
+
+

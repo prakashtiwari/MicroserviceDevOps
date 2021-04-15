@@ -1,0 +1,148 @@
+Create MAnifest files:
+
+Extensions needed in VS code: Docker, Kubernetes, Yaml
+
+Create mongo database deployment yaml files.
+Go to docker hub and get the environment variables.
+
+Create deployment
+Create Secret definition.
+Secret should be in base64
+
+Command to apply secret:
+kubectl apply -f .\mongo-secret.yaml
+
+Command to get secret:
+kubectl get secret
+
+Use kubernete secret in mongo deployment file.
+
+Command to deploy kubernete
+kubectl apply -f .\mongo.yaml
+
+kubectl get pod --watch
+
+kubectl describe pod mongo-deployment-9c5b4dddb-wnhrw
+
+kubectl get service
+
+kubectl describe service mongo-service
+
+kubectl get pod mongo-deployment-9c5b4dddb-wnhrw -o wide
+
+
+Service completed
+
+Building shopping image
+
+docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
+docker-compose -f docker-compose.yml -f docker-compose.override.yml down
+
+tag images
+docker tag ec93e34513c4 dockerprakash123/shoppingclient
+docker tag 321f7fe29c40 dockerprakash123/shoppingapi
+
+Push above latest iamges to docker hub
+Command:
+run below command
+docker login
+Use docker push 
+
+docker push dockerprakash123/shoppingclient
+docker push dockerprakash123/shoppingapi
+
+Clear docker copose container
+docker-compose -f docker-compose.yml -f docker-compose.override.yml down
+
+Remove images
+docker rmi <image_name> -f
+
+Create shopping API kubernete deployment file.
+Create Deployment and Service in the same file.
+Test YAML
+kubectl apply -f shoppingapi.yaml
+Delete deployment
+kubectl delete -f shoppingapi.yaml
+
+To see the deployment status
+kubectl get all
+
+Final connection string of mongodb database
+
+mongodb://username:password@mongo-service:27017
+
+Test the API using following URL:
+http://localhost:31000/swagger/index.html
+
+Best Practices:
+We should provide connectiostring value in configmaps.
+
+Configmap resource in kubernete.
+
+Steps to move connectionstrings to configmap file.
+Defeine in following order:
+Configmap
+
+kubectl apply -f .\mongo-configmap.yaml
+kubectl apply -f .\shoppingapi.yaml
+Secret
+
+Prepare shoppingclient deployment
+1. Create shoppingapi-configmap
+
+kubectl apply -f .\shoppingapi-configmap.yaml
+
+
+Use configmap in shoppingclient yaml file.
+
+Resource is mandatory in yaml.
+
+kubectl apply -f .\shoppingclient.yaml
+kubectl get svc
+kubectl get service
+
+
+Show kubernete dashboard:
+Run below to get token information.
+kubectl describe secret -n kube-system
+
+run below:
+kubectl proxy
+Then put token
+eyJhbGciOiJSUzI1NiIsImtpZCI6Il96UV9TQ3VPb2Ywa085bmRsZW9oQjNHNEM1aVhxNTMyajIydDBKVjIydXMifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJ2cG5raXQtY29udHJvbGxlci10b2tlbi1xcnp3dyIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJ2cG5raXQtY29udHJvbGxlciIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6IjM1MzQ1ZmMwLWRkN2EtNDI1ZS1hMzViLTkwNDQ1ZWM3OGZlNCIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTp2cG5raXQtY29udHJvbGxlciJ9.gIqV1bBCGcJ3HecA8GSU4ROAeZxqaVMhBKtmwtLNg1fzjI5kMNsWiUvkNBocuL9YpAW7xUj-_3gI1nsBKvyst9NBvi6I5oXE63sdTDX3YQpIjZe2zV-pf6kh9uTp83oLNeJUyiUpXSYGrUIuQLouKOAuNTsOm092JGCefjFVQdqDpgh9HLu-uqBd2BzuAfjNI6W8xCt379beiulWb6fvtoaYToyKR3w_iONxoyDcjEmtnY65cFLWplbQwsqW7gsrJoZ62MEHqs-MiGcxnDUKbF4x9MvfYq5fg4WzDDSHPiMuQyWJ5BFFrnShI8_qljqUwjNpl_S2zhnYNqK36FX-gQ
+
+
+Clear resources in local
+kubectl delete -f .  (Delete all yaml in current folder)
+
+
+Environment Variables:
+
+
+
+Create Secret definition for mongo
+
+How to reach secret into deployment YAML file?
+
+Create Kubernete service definition for, 
+
+
+Create docker image> Push to docker hub> Kubernete pull images from docker hub
+
+
+Use images from docker hub
+
+Api kubernete deployment file.
+
+Test YAML in kubernete
+
+Config map resource: used to store connection string in kubernete.
+
+URL values should be stored in configmap of the kubernete.
+
+Troubleshoot in kubernete
+
+---------------------------------------------------------------------------------
+
+Clear resources
+
