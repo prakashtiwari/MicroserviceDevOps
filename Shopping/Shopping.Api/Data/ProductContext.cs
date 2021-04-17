@@ -42,7 +42,7 @@ namespace Shopping.Api.Data
         {
         new Product()
         {
-            Name = "IPhone X",
+            Name = "IPhone X Latest",
         Description = "This product is the best in the market",
         Price = 100.20M,
         Category = "Smart Phone"
