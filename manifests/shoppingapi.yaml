@@ -16,10 +16,9 @@ spec:
     spec:
       containers:
       - name: shoppingapi
-        image: dockerprakash123/shoppingapi:latest
+        image: shoppingacrprak.azurecr.io/shoppingapi:v1
         imagePullPolicy: IfNotPresent
-        imagePullSecret:
-          name: acr-secret
+       
         ports:
         - containerPort: 80
         env:
@@ -37,17 +36,16 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "500m"
+      imagePullSecrets:
+        - name: acr-secret
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: shoppingapi-service
-spec:
-  type: NodePort
+spec:  
   selector: 
     app: shoppingapi
   ports:
     - protocol: TCP
-      port: 8000
-      targetPort: 80
-      nodePort: 31000
+      port: 80
